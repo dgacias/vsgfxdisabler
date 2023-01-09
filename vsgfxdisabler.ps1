@@ -1,3 +1,6 @@
+write-host "Loading, please wait..."
+Add-Type -AssemblyName System.Windows.Forms
+
 if (!(Test-Path -Path items_backup.json)) {
     Copy-Item "items.json" -Destination "items_backup.json"
 }
@@ -73,7 +76,7 @@ foreach ($texture in $items.textures.frames) {
     $checkBox.Size = New-Object System.Drawing.Size(80,80)
     $checkBox.BackgroundImage = $partialImage
     $checkbox.BackgroundImageLayout = "Zoom"
-        if ($texture.spriteSourceSize.w -ne 0) {
+        if ($texture.frame.w -ne 0) {
         $checkBox.Checked = $true
     }
     else {
@@ -103,7 +106,7 @@ foreach ($texture2 in $items2.textures.frames) {
     $checkBox2.Size = New-Object System.Drawing.Size(80,80)
     $checkBox2.BackgroundImage = $partialImage2
     $checkbox2.BackgroundImageLayout = "Zoom"
-        if ($texture2.spriteSourceSize.w -ne 0) {
+        if ($texture2.frame.w -ne 0) {
         $checkBox2.Checked = $true
     }
     else {
@@ -181,7 +184,7 @@ $rightFrame.Controls.Add($selectNoneButton2)
 
 #Save
 $saveButton = New-Object System.Windows.Forms.Button
-$saveButton.Text = "Save"
+$saveButton.Text = "Save (wait for notification)"
 $saveButton.Location = New-Object System.Drawing.Size(10,($winH-200))
 $saveButton.Size = New-Object System.Drawing.Size(($winW/2-40),30)
 $saveButton.Add_Click({
@@ -189,8 +192,8 @@ $saveButton.Add_Click({
     foreach ($checkBox in $checkBoxes) {
         if (!$checkBox.Checked) {
             $texture = $items.textures.frames | Where-Object {$_.filename -eq $checkBox.Name}
-            $texture.spriteSourceSize.w = 0
-            $texture.spriteSourceSize.h = 0
+            $texture.frame.w = 0
+			$texture.frame.h = 0
         }
     }
     $items | ConvertTo-Json -Depth 100 | Set-Content -Path .\items.json
@@ -199,8 +202,8 @@ $saveButton.Add_Click({
     foreach ($checkBox2 in $checkBoxes2) {
         if (!$checkBox2.Checked) {
             $texture2 = $items2.textures.frames | Where-Object {$_.filename -eq $checkBox2.Name}
-            $texture2.spriteSourceSize.w = 0
-            $texture2.spriteSourceSize.h = 0
+            $texture2.frame.w = 0
+			$texture2.frame.h = 0
         }
     }
     $items2 | ConvertTo-Json -Depth 100 | Set-Content -Path .\vfx.json
@@ -217,7 +220,7 @@ $rightFrame.Controls.Add($saveButton)
 
 #Restore items
 $restoreitemsButton = New-Object System.Windows.Forms.Button
-$restoreitemsButton.Text = "Restore Original items.json file"
+$restoreitemsButton.Text = "Restore Original items.json file (wait for notification)"
 $restoreitemsButton.Location = New-Object System.Drawing.Size(10,($winH-150))
 $restoreitemsButton.Size = New-Object System.Drawing.Size(($winW/2-40),30)
 $restoreitemsButton.Add_Click({
@@ -233,7 +236,7 @@ $rightFrame.Controls.Add($restoreitemsButton)
 
 #Restore VFX
 $restorevfxButton = New-Object System.Windows.Forms.Button
-$restorevfxButton.Text = "Restore Original vfx.json file"
+$restorevfxButton.Text = "Restore Original vfx.json file (wait for notification)" 
 $restorevfxButton.Location = New-Object System.Drawing.Size(10,($winH-100))
 $restorevfxButton.Size = New-Object System.Drawing.Size(($winW/2-40),30)
 $restorevfxButton.Add_Click({
