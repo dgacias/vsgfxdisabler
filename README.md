@@ -14,4 +14,5 @@ Right click on the powershell file and select "Run with powershell". Wait some s
 
 Remember to save the changes! (It may take some seconds, wait until a popup is displayed)
 
+NOTE: Reenabling the checkboxes actually do nothing even if you save at this moment, please restore the original file and disable again the effects you do not want to see.
 If you restore any original files, close and open the program again to refresh the changes.
