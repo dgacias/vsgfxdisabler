@@ -16,3 +16,21 @@ Remember to save the changes! (It may take some seconds, wait until a popup is d
 
 NOTE: Reenabling the checkboxes actually do nothing even if you save at this moment, please restore the original file and disable again the effects you do not want to see.
 If you restore any original files, close and open the program again to refresh the changes.
+
+## TROUBLESHOOTING
+If the script does not run for you, probably you have powershell execute restrictions, try this.
+
+Open the folder where you have the script, right click on the blank part of the folder and open a terminal.
+
+Type:
+powershell .\vsgfxdisabler.ps1
+
+It should say what the error is without closing the window.
+If the problem is that the policy of the machine do not allow to run powershell scripts (most likely), then do this:
+
+Right click on the windows button, open a powershell (administrator)
+Execute this command:
+Set-ExecutionPolicy Bypass
+
+If permissions was the problem, then you should be able to right click and run the powershell script as intended.
+Beware that by default windows protects you from doing this because you might download a malware script from the internet (mine is safe, you can see the code for yourself).
